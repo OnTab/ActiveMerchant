@@ -17,7 +17,7 @@ module ActiveMerchant #:nodoc:
       self.homepage_url = 'http://www.globalpaymentsinc.com/USA/merchants/eCommerce.html'
 
       # The money format
-      self.money_format = :cents
+      self.money_format = :dollars
 
       # The name of the gateway
       self.display_name = 'Global Payments'
