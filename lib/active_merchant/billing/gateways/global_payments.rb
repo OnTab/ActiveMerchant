@@ -2,7 +2,7 @@ module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     class GlobalPaymentsGateway < Gateway
 
-      self.test_url = 'https://certapia.globalpay.com/GlobalPay/transact.asmx/'
+      self.test_url = 'https://certapia.globalpay.com/GlobalPay/'
       #self.live_url = 'https://example.com/live'
 
       # The countries the gateway supports merchants from as 2 digit ISO country codes
@@ -29,33 +29,9 @@ module ActiveMerchant #:nodoc:
         super
       end
 
-      #def authorize(money, creditcard, options = {})
-      #  post = {}
-      #  add_invoice(post, options)
-      #  add_creditcard(post, creditcard)
-      #  add_address(post, creditcard, options)
-      #  add_customer_data(post, options)
-      #
-      #  commit('authonly', money, post)
-      #end
-
-      # To create a charge on a card or a token, call
-      #
-      #   purchase(money, card_hash, { ... })
-      #
-      # To create a charge on a customer, call
-      #
-      #   purchase(money, nil, { :customer => PNRef, ... })
       def purchase(money, creditcard, options = {})
         post = create_post_for_purchase(money, creditcard, options)
-
-        if (!creditcard.nil?)
-          post[:TransType] = 'Sale'
-        elsif !options[:customer].nil?
-          post[:TransType] = 'RepeatSale'
-        end
-
-        commit('ProcessCreditCard?', post)
+        commit('transact.asmx/ProcessCreditCard?', post)
       end
 
       def store(creditcard, options = {})
@@ -63,29 +39,12 @@ module ActiveMerchant #:nodoc:
         post[:TransType] = 'RepeatSale'
       end
 
-      #def capture(money, authorization, options = {})
-      #  commit('capture', money, post)
-      #end
 
-      #private
+      def refund(money, authorization, options = {})
+        post = create_post_for_refund(money, authorization, options)
+        commit('transact.asmx/ProcessCreditCard?', post)
+      end
 
-      #def add_customer_data(post, options)
-      #end
-
-      #def add_invoice(post, options)
-      #end
-
-      #def add_creditcard(post, creditcard)
-      #end
-
-      #def parse(body)
-      #end
-
-      #def commit(action, money, parameters)
-      #end
-
-      #def message_from(response)
-      #end
 
       private
 
@@ -142,9 +101,19 @@ module ActiveMerchant #:nodoc:
         post[:PNRef] = ""
         post[:ExtData] = ""
         post[:MagData] = ""
+        post[:TransType] = 'Sale'
         add_amount(post, money, options)
         add_address(post, creditcard, options)
         add_creditcard(post, creditcard, options)
+        post
+      end
+
+      def create_post_for_refund(money, authorization, options)
+        post = { }
+        post[:PNRef] = authorization
+        add_amount(post, money, options)
+        post[:TransType] = 'Return'
+        post[:ExtData] = ""
         post
       end
 
