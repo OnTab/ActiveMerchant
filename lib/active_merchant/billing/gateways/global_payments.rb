@@ -2,6 +2,10 @@ module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     class GlobalPaymentsGateway < Gateway
 
+      TRANSACTION_TYPES = [TYPE_SALE = "Sale",
+                           TYPE_REFUND = "Return",
+                           TYPE_REPEAT_SALE = "RepeatSale"]
+
       self.test_url = 'https://certapia.globalpay.com/GlobalPay/'
       #self.live_url = 'https://example.com/live'
 
@@ -30,18 +34,14 @@ module ActiveMerchant #:nodoc:
       end
 
       def purchase(money, creditcard, options = {})
-        post = create_post_for_purchase(money, creditcard, options)
+        post = { }
+        post = create_gp_transact_params(post, TYPE_SALE, money, creditcard, nil, options)
         commit('transact.asmx/ProcessCreditCard?', post)
       end
 
-      def store(creditcard, options = {})
-        post = {}
-        post[:TransType] = 'RepeatSale'
-      end
-
-
       def refund(money, authorization, options = {})
-        post = create_post_for_refund(money, authorization, options)
+        post = { }
+        post = create_gp_transact_params(post, TYPE_REFUND, money, nil, authorization, options)
         commit('transact.asmx/ProcessCreditCard?', post)
       end
 
@@ -95,57 +95,46 @@ module ActiveMerchant #:nodoc:
         end.compact.join("&")
       end
 
-      def create_post_for_purchase(money, creditcard, options)
-        post = { }
-        post[:InvNum] = ""
-        post[:PNRef] = ""
-        post[:ExtData] = ""
-        post[:MagData] = ""
-        post[:TransType] = 'Sale'
+      def create_gp_transact_params(post, transaction_type, money, creditcard, authorization, options)
+        add_transact_type(post, transaction_type)
+        add_authorization(post, authorization)
+        add_invoice(post, options)
+        add_magdata(post, options)
         add_amount(post, money, options)
         add_address(post, creditcard, options)
         add_creditcard(post, creditcard, options)
-        post
+        add_extradata(post, options)
       end
 
-      def create_post_for_refund(money, authorization, options)
-        post = { }
+      def add_auth_token(post)
+        post[:GlobalUsername] = @username
+        post[:GlobalPassword] = @password
+      end
+
+      def add_transact_type(post, transaction_type)
+        post[:TransType] = transaction_type
+      end
+
+
+      def add_authorization(post, authorization)
         post[:PNRef] = authorization
-        add_amount(post, money, options)
-        post[:TransType] = 'Return'
-        post[:ExtData] = ""
-        post
       end
 
-      def create_post_for_auth_or_purchase(money, creditcard, options)
-        post = { }
-        post[:InvNum] = ""
-        post[:PNRef] = ""
-        post[:ExtData] = ""
-        post[:MagData] = ""
-        add_customer(post, options)
-        add_amount(post, money, options)
-        add_address(post, creditcard, options)
-        add_creditcard(post, creditcard, options)
-        post
+      def add_invoice(post, options)
+        post[:InvNum] = options[:invoice_number]
       end
 
-      def add_customer(post, options)
-        post[:PNRef] = options[:customer] if options[:customer]
-      end
-
-      def add_address(post, creditcard, options)
-        post[:Zip] = ""
-        post[:Street] = ""
+      def add_magdata(post, options)
+        post[:MagData] = options[:mag_data]
       end
 
       def add_amount(post, money, options)
         post[:Amount] = amount(money)    #note this is changed to cents!
       end
 
-      def add_auth_token(post)
-        post[:GlobalUsername] = @username
-        post[:GlobalPassword] = @password
+      def add_address(post, creditcard, options)
+        post[:Zip] = ""
+        post[:Street] = ""
       end
 
       def add_creditcard(post, creditcard, options)
@@ -154,12 +143,16 @@ module ActiveMerchant #:nodoc:
         post[:ExpDate] = ""
         post[:CVNum] = ""
         post[:NameOnCard] = ""
-        if !creditcard.nil?
+        unless creditcard.nil?
           post[:CardNum] = creditcard.number
           post[:ExpDate] = creditcard.month.to_s + creditcard.year.to_s[-2,2]
           post[:CVNum] = creditcard.verification_value if creditcard.verification_value?
           post[:NameOnCard] = creditcard.name if creditcard.name?
         end
+      end
+
+      def add_extradata(post, options)
+        post[:ExtData] = options[:extra_data]
       end
 
       def response_error(raw_response)
@@ -185,77 +178,6 @@ module ActiveMerchant #:nodoc:
       end
 
 
-=begin
-      self.test_url = 'https://example.com/test'
-      self.live_url = 'https://example.com/live'
-
-      # The countries the gateway supports merchants from as 2 digit ISO country codes
-      self.supported_countries = ['US']
-
-      # The card types supported by the payment gateway
-      self.supported_cardtypes = [:visa, :master, :american_express, :discover]
-
-      # The homepage URL of the gateway
-      self.homepage_url = 'http://www.example.net/'
-
-      # The name of the gateway
-      self.display_name = 'New Gateway'
-
-      def initialize(options = {})
-        #requires!(options, :login, :password)
-        super
-      end
-
-      def authorize(money, creditcard, options = {})
-        post = {}
-        add_invoice(post, options)
-        add_creditcard(post, creditcard)
-        add_address(post, creditcard, options)
-        add_customer_data(post, options)
-
-        commit('authonly', money, post)
-      end
-
-      def purchase(money, creditcard, options = {})
-        post = {}
-        add_invoice(post, options)
-        add_creditcard(post, creditcard)
-        add_address(post, creditcard, options)
-        add_customer_data(post, options)
-
-        commit('sale', money, post)
-      end
-
-      def capture(money, authorization, options = {})
-        commit('capture', money, post)
-      end
-
-      private
-
-      def add_customer_data(post, options)
-      end
-
-      def add_address(post, creditcard, options)
-      end
-
-      def add_invoice(post, options)
-      end
-
-      def add_creditcard(post, creditcard)
-      end
-
-      def parse(body)
-      end
-
-      def commit(action, money, parameters)
-      end
-
-      def message_from(response)
-      end
-
-      def post_data(action, parameters = {})
-      end
-=end
     end
   end
 end
