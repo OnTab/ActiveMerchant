@@ -9,8 +9,8 @@
     <file path="/Dummy.txt" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1382467093705" ignored="false" />
     <file path="/remote_global_payments_test.rb" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1381426354493" ignored="false" />
     <file path="/global_payments.rb" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1382471459752" ignored="false" />
-    <file path="$PROJECT_DIR$/../ontab/app/models/charge.rb" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1382467318994" ignored="false" />
-    <file path="/charge.rb" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1382027234502" ignored="false" />
+    <file path="$PROJECT_DIR$/../ontab/app/models/charge.rb" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1382472496044" ignored="false" />
+    <file path="/charge.rb" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1382472496044" ignored="false" />
     <file path="/merchant.rb" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1381443257542" ignored="false" />
     <file path="$PROJECT_DIR$/../ontab/app/models/merchant.rb" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1381443265093" ignored="false" />
     <file path="$PROJECT_DIR$/../ontab/Gemfile" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1382358374590" ignored="false" />
@@ -125,7 +125,7 @@
       <file leaf-file-name="global_payments.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/active_merchant/billing/gateways/global_payments.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="32" selection-start="1594" selection-end="1594" vertical-scroll-proportion="0.39596274">
+            <state line="49" column="6" selection-start="1609" selection-end="1609" vertical-scroll-proportion="0.41925466">
               <folding />
             </state>
           </provider>
@@ -546,7 +546,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/active_merchant/billing/gateways/global_payments.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="32" selection-start="1594" selection-end="1594" vertical-scroll-proportion="0.39596274">
+        <state line="49" column="6" selection-start="1609" selection-end="1609" vertical-scroll-proportion="0.41925466">
           <folding />
         </state>
       </provider>
