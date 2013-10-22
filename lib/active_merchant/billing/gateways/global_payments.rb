@@ -46,7 +46,7 @@ module ActiveMerchant #:nodoc:
       end
 
 
-      private
+      #private
 
       def commit(action, parameters)
         add_auth_token(parameters)
