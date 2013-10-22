@@ -104,6 +104,7 @@ module ActiveMerchant #:nodoc:
         add_address(post, creditcard, options)
         add_creditcard(post, creditcard, options)
         add_extradata(post, options)
+        post
       end
 
       def add_auth_token(post)
