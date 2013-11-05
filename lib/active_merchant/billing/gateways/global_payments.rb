@@ -45,6 +45,16 @@ module ActiveMerchant #:nodoc:
         commit('transact.asmx/ProcessCreditCard?', post)
       end
 
+      def repeat_sale(money, authorization, options = {})
+        post = { }
+        post = create_gp_transact_params(post, TYPE_REPEAT_SALE, money, nil, authorization, options)
+        commit('transact.asmx/ProcessCreditCard?', post)
+      end
+
+      def recurring(authorization, options = {})
+        repeat_sale(nil, authorization, options)
+      end
+
 
       private
 
@@ -67,7 +77,7 @@ module ActiveMerchant #:nodoc:
                      response,
                      :authorization => response['PNRef'],
                      :avs_result => response['GetAVSResult'],
-                     :cvc_result => response['GetCVResult'],
+                     :cvv_result => response['GetCVResult'],
                      :message => response['Message']
         )
 
