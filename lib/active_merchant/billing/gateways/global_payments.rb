@@ -71,12 +71,11 @@ module ActiveMerchant #:nodoc:
         end
 
         Response.new(success,
-                     success ? "Transaction approved" : response["RespMSG"],
+                     response['Message'],
                      response,
                      :authorization => response['PNRef'],
                      :avs_result => response['GetAVSResult'],
-                     :cvv_result => response['GetCVResult'],
-                     :message => response
+                     :cvv_result => response['GetCVResult']
         )
       end
 

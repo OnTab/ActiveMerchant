@@ -3,15 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="133c82a4-f07c-49c5-98ca-6b3a845b10d1" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/active_merchant/billing/gateways/global_payments.rb" afterPath="$PROJECT_DIR$/lib/active_merchant/billing/gateways/global_payments.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="active_merchant.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1384615394887" ignored="false" />
     <file path="/remote_global_payments_test.rb" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1381426354493" ignored="false" />
     <file path="/global_payments.rb" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1384860599979" ignored="false" />
-    <file path="$PROJECT_DIR$/../ontab/app/models/charge.rb" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1384861585479" ignored="false" />
-    <file path="/charge.rb" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1384861563529" ignored="false" />
+    <file path="$PROJECT_DIR$/../ontab/app/models/charge.rb" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1384861917616" ignored="false" />
+    <file path="/charge.rb" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1384861915516" ignored="false" />
     <file path="/merchant.rb" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1384299969927" ignored="false" />
     <file path="$PROJECT_DIR$/../ontab/app/models/merchant.rb" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1384299969927" ignored="false" />
     <file path="$PROJECT_DIR$/../ontab/Gemfile" changelist="133c82a4-f07c-49c5-98ca-6b3a845b10d1" time="1382551253611" ignored="false" />
@@ -161,7 +160,7 @@
       <file leaf-file-name="global_payments.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/active_merchant/billing/gateways/global_payments.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="78" column="41" selection-start="2826" selection-end="2826" vertical-scroll-proportion="0.89041096">
+            <state line="72" column="8" selection-start="2474" selection-end="2474" vertical-scroll-proportion="0.33333334">
               <folding />
             </state>
           </provider>
@@ -500,7 +499,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/active_merchant/billing/gateways/global_payments.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="41" selection-start="2826" selection-end="2826" vertical-scroll-proportion="0.89041096">
+        <state line="72" column="8" selection-start="2474" selection-end="2474" vertical-scroll-proportion="0.33333334">
           <folding />
         </state>
       </provider>
