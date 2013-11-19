@@ -55,9 +55,7 @@ module ActiveMerchant #:nodoc:
         repeat_sale(nil, authorization, options)
       end
 
-
       private
-
       def commit(action, parameters)
         add_auth_token(parameters)
         success = false
@@ -78,9 +76,8 @@ module ActiveMerchant #:nodoc:
                      :authorization => response['PNRef'],
                      :avs_result => response['GetAVSResult'],
                      :cvv_result => response['GetCVResult'],
-                     :message => response['Message']
+                     :message => response
         )
-
       end
 
       def parse(body)
